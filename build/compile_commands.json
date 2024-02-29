@@ -1,0 +1,57 @@
+[
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/main.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/main.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/main.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/drevo.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/drevo.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/drevo.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/igralec.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/igralec.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/igralec.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/ogenj.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/ogenj.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/ogenj.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/sdl-window-and-renderer.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/sdl-window-and-renderer.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/sdl-window-and-renderer.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/seznamSovraznikov.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/seznamSovraznikov.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/seznamSovraznikov.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/seznamStaroselcev.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/seznamStaroselcev.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/seznamStaroselcev.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/sovraznik.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/sovraznik.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/sovraznik.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/staroselec.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/staroselec.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/staroselec.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/verigaOgnjev.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/verigaOgnjev.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/verigaOgnjev.cpp"
+},
+{
+  "directory": "/home/bavconlaura/Desktop/sdl2-game/build",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/sdl2-game.dir/src/zemljevidDreves.cpp.o -c /home/bavconlaura/Desktop/sdl2-game/src/zemljevidDreves.cpp",
+  "file": "/home/bavconlaura/Desktop/sdl2-game/src/zemljevidDreves.cpp"
+}
+]

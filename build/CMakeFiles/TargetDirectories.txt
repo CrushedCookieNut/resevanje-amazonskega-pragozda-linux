@@ -1,0 +1,5 @@
+/home/bavconlaura/Desktop/sdl2-game/build/CMakeFiles/sdl2-game.dir
+/home/bavconlaura/Desktop/sdl2-game/build/CMakeFiles/package.dir
+/home/bavconlaura/Desktop/sdl2-game/build/CMakeFiles/package_source.dir
+/home/bavconlaura/Desktop/sdl2-game/build/CMakeFiles/edit_cache.dir
+/home/bavconlaura/Desktop/sdl2-game/build/CMakeFiles/rebuild_cache.dir
