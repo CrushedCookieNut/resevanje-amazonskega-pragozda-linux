@@ -39,8 +39,4 @@ void sovraznik::premikanje() {
     y+=velocity_y;
 }
 
-SDL_Rect sovraznik::getRect() {
-    return podlaga;
-}
-
 //void sovraznik::unicevanjeDreves()

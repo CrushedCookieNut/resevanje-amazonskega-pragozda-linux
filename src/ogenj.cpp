@@ -22,6 +22,18 @@ void ogenj::risanje() {
     SDL_RenderCopy(renderer, ogenjTexture, NULL, &podlaga);
 }
 
-SDL_Rect ogenj::getRect() {
-    return podlaga;
+int ogenj::vrniZdravje() {
+    return zdravje;
+}
+
+void ogenj::spremeniZdravje() {
+    zdravje=0;
+}
+
+int ogenj::getX() {
+    return x;
+}
+
+int ogenj::getY() {
+    return y;
 }

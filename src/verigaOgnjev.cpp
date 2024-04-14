@@ -14,7 +14,8 @@ void verigaOgnjev::ustvariVerigoOgnjev() {
 
 void verigaOgnjev::izrisiVerigoOgnjev() {
     for (int i=0;i<veriga.size();i++) {
-        veriga.at(i).risanje();
+        if (veriga.at(i).vrniZdravje()==1)
+            veriga.at(i).risanje();
     }
 }
 

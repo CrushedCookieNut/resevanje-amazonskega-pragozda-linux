@@ -15,33 +15,26 @@
 #include "include/seznamStaroselcev.hpp"
 using namespace std;
 
-/*void preverjanjeTrkov(igralec a, verigaOgnjev b, seznamSovraznikov c, seznamStaroselcev d, zemljevidDreves e) {
-    SDL_Rect tmp;
-    for (int i=0;i<b.veriga.size();i++) {
-        tmp=b.veriga.at(i).getRect();
-        if (SDL_HasIntersection(&a.getRect(),&tmp)) {
+void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c) { //preverjanje trkov med ognjem in igralcem, ostalo še potrbno dodati
+    bool trkZOgnjem, trkSSovraznikom;
+    for (int i=0;i<b.veriga.size();i++) { //gre čez cel vektor ognjev
+        trkZOgnjem = SDL_HasIntersection(&a.podlaga, &b.veriga.at(i).podlaga);
+        if (trkZOgnjem==SDL_TRUE) {
+            cout << "Trk!"; //za debugging večinoma
             b.izbrisiOgenj(i);
         }
     }
     for (int i=0;i<c.seznam.size();i++) {
-        tmp=c.seznam.at(i).getRect();
-        if (SDL_HasIntersection(&a.getRect(),&tmp)) {
+        trkSSovraznikom=SDL_HasIntersection(&a.podlaga,&c.seznam.at(i).podlaga);
+        if (trkSSovraznikom==SDL_TRUE) {
+            cout << "Trk!";
             c.izbrisiSovraznika(i);
         }
     }
-    for (int i=0;i<c.seznam.size();i++) {
-        for (int j=0;j<e.zemljevid.size();j++) {
-            tmp=e.zemljevid.at(i).getRect();
-            if (SDL_HasIntersection(&c.seznam.at(i).getRect(),&tmp)) {
-                e.uniciDrevo(i);
-            }
-        }
-    }
-}*/
+}
 
 void osvezevanje(zemljevidDreves igralenZemljevid, verigaOgnjev x, seznamSovraznikov a, igralec b, seznamStaroselcev c) {
-    SDL_RenderClear(renderer);
-    //preverjanjeTrkov(b,x,a,c,igralenZemljevid);
+    SDL_RenderClear(renderer); //funkcija da se ponovno izrisuje use vedno
     igralenZemljevid.ustvariZemljevidDreves();
     for (int i=0;i<a.seznam.size();i++) {
         a.seznam.at(i).premikanje();
@@ -55,7 +48,7 @@ void osvezevanje(zemljevidDreves igralenZemljevid, verigaOgnjev x, seznamSovrazn
     b.preveriDotikanjeRoba();
     b.risanje();
     SDL_RenderPresent(renderer);
-    //SDL_Delay(20);
+    preveriTrk(b,x,a); //to je na koncu in tehnično deluje ampak ne  vem zakaj?
 }
 
 int main() {
@@ -72,6 +65,7 @@ int main() {
     Uint32 frameStart;
     int frameTime;
 
+    //ustvarjanje usega
     zemljevidDreves igralenZemljevid;
     verigaOgnjev x;
     x.ustvariVerigoOgnjev();
@@ -84,6 +78,7 @@ int main() {
 
     SDL_Event windowEvent, premikanje;
 
+    //glavn loop igrice
     while (true) {
         frameStart=SDL_GetTicks();
 

@@ -2,6 +2,7 @@
 #define IGRALEC_HPP
 
 #include "ljudje.hpp"
+#include "verigaOgnjev.hpp"
 #include "sdl-window-and-renderer.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -9,8 +10,8 @@
 class igralec:public ljudje {
     SDL_Surface *igralecSurface;
     SDL_Texture *igralecTexture;
-    SDL_Rect podlaga;
     public:
+    SDL_Rect podlaga;
     igralec();
     void smrt();
     void premikanje();
@@ -19,7 +20,7 @@ class igralec:public ljudje {
     void preveriDotikanjeRoba();
     int getX();
     int getY();
-    SDL_Rect getRect();
+    int dotikanjeOgnja(const verigaOgnjev&);
 };
 
 #endif

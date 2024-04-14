@@ -7,11 +7,14 @@
 class ogenj:public vse {
     SDL_Surface *ogenjSurface;
     SDL_Texture *ogenjTexture;
-    SDL_Rect podlaga;
     public:
-    SDL_Rect getRect();
+    SDL_Rect podlaga;
     void risanje();
     ogenj();
+    int vrniZdravje();
+    void spremeniZdravje();
+    int getX();
+    int getY(); //for debugging purposes
 };
 
 #endif

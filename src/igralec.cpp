@@ -1,4 +1,5 @@
 #include "include/igralec.hpp"
+#include "include/verigaOgnjev.hpp"
 #include "include/sdl-window-and-renderer.hpp"
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -63,8 +64,4 @@ int igralec::getX() {
 
 int igralec::getY() {
     return y;
-}
-
-SDL_Rect igralec::getRect() {
-    return podlaga;
 }
