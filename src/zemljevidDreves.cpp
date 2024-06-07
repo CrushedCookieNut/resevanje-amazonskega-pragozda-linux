@@ -1,4 +1,6 @@
 #include "include/zemljevidDreves.hpp"
+#include <iostream>
+using namespace std;
 
 void zemljevidDreves::ustvariZemljevidDreves() {
     int i=0;
@@ -17,5 +19,22 @@ void zemljevidDreves::ustvariZemljevidDreves() {
 
 void zemljevidDreves::uniciDrevo(int index) {
     zemljevid.at(index).zdravje=0;
-    zemljevid.at(index).risanje();
+    //zemljevid.at(index).risanje();
+}
+
+void zemljevidDreves::izrisujDrevesa() {
+    for (int i=0;i<zemljevid.size();i++) {
+        zemljevid.at(i).risanje();
+    }
+}
+
+bool zemljevidDreves::preveriKonec() {
+    int kolikoMrtvih=0;
+    for (int i=0;i<zemljevid.size();i++) {
+        if (zemljevid.at(i).zdravje==0)
+            kolikoMrtvih++;
+    }
+    if (kolikoMrtvih>=(zemljevid.size()*0.7))
+        return 1;
+    return 0;
 }

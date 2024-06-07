@@ -10,6 +10,8 @@ class zemljevidDreves {
     zemljevidDreves():zemljevid(80) {}
     void ustvariZemljevidDreves();
     void uniciDrevo(int);
+    void izrisujDrevesa();
+    bool preveriKonec();
 };
 
 #endif

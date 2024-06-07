@@ -29,14 +29,31 @@ void sovraznik::risanje() {
 }
 
 void sovraznik::premikanje() {
-    double accelaration_x=(std::rand()%501-250)/100.0;
+   /* double accelaration_x=(std::rand()%501-250)/100.0;
     double acceleration_y=(std::rand()%501-250)/100.0;
     velocity_x+=accelaration_x;
     velocity_y+=acceleration_y;
     velocity_x*=damping;
     velocity_y*=damping;
     x+=velocity_x;
-    y+=velocity_y;
+    y+=velocity_y;*/
+    int speed=5;
+    double angle = static_cast<double>(std::rand()) / RAND_MAX * 2 * M_PI;
+
+    int newX = x + static_cast<int>(speed * std::cos(angle));
+    int newY = y + static_cast<int>(speed * std::sin(angle));
+
+    x = newX;
+    y = newY;
+
+    if (x>900)
+        x=900;
+    if (x<0)
+        x=0;
+    if (y<0)
+        y=0;
+    if (y>700)
+        y=700;
 }
 
 //void sovraznik::unicevanjeDreves()

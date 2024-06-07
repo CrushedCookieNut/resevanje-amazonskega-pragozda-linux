@@ -22,18 +22,19 @@ void ogenj::risanje() {
     SDL_RenderCopy(renderer, ogenjTexture, NULL, &podlaga);
 }
 
-int ogenj::vrniZdravje() {
+int ogenj::vrniZdravje() const {
     return zdravje;
 }
 
 void ogenj::spremeniZdravje() {
     zdravje=0;
+    //std::cout << "Zdravje spremenjeno!" << std::endl;
 }
 
-int ogenj::getX() {
+int ogenj::getX() const {
     return x;
 }
 
-int ogenj::getY() {
+int ogenj::getY() const {
     return y;
 }

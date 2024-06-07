@@ -10,6 +10,7 @@ class verigaOgnjev {
     void ustvariVerigoOgnjev();
     void izbrisiOgenj(int);
     void izrisiVerigoOgnjev();
+    bool preveriKonec();
 };
 
 #endif

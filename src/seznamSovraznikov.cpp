@@ -17,3 +17,9 @@ void seznamSovraznikov::izrisiSeznamSovraznikov() {
 void seznamSovraznikov::izbrisiSovraznika(int index) {
     seznam.erase(seznam.begin()+index);
 }
+
+bool seznamSovraznikov::preveriKonec() {
+    if (this->seznam.size()<=0)
+        return 1;
+    return 0;
+}

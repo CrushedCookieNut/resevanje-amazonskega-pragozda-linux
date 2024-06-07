@@ -25,18 +25,64 @@ void staroselec::risanje() {
     return;
 }
 
-void staroselec::premikanje(igralec igralec) {
+/*void staroselec::premikanje(igralec igralec) {
     int targetX = igralec.getX();
     int targetY = igralec.getY();
 
     double angle = atan2(targetY - this->y, targetX - this->x);
 
-    double speed = 50;
+    double distance = sqrt(pow(targetX - this->x, 2) + pow(targetY - this->y, 2));
 
-    this->x += static_cast<int>(speed * cos(angle));
-    this->y += static_cast<int>(speed * sin(angle));
-}
+    double baseSpeed = 10;
+    double scalingFactor = 0.025;
 
-SDL_Rect staroselec::getRect() {
-    return podlaga;
+    double speed = std::min(baseSpeed, distance * scalingFactor);
+
+    int newX = this->x + static_cast<int>(speed * cos(angle));
+    int newY = this->y + static_cast<int>(speed * sin(angle));
+
+    this->x = newX;
+    this->y = newY;
+} */
+
+
+
+void staroselec::premikanje(verigaOgnjev& veriga) {
+    std::vector<ogenj>& allOgnji = veriga.veriga;
+
+    if (allOgnji.empty()) return;
+
+    // Find the nearest ogenj
+    ogenj* nearestOgnji = nullptr;
+    double minDistance = std::numeric_limits<double>::max();
+
+    for (size_t i = 0; i < allOgnji.size(); ++i) {
+        if (allOgnji[i].vrniZdravje() > 0) { // Only consider active ogenj objects
+            double distance = sqrt(pow(allOgnji[i].getX() - this->x, 2) + pow(allOgnji[i].getY() - this->y, 2));
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestOgnji = &allOgnji[i];
+            }
+        }
+    }
+
+    if (nearestOgnji) {
+        int targetX = nearestOgnji->getX();
+        int targetY = nearestOgnji->getY();
+
+        double angle = atan2(targetY - this->y, targetX - this->x);
+
+        double distance = sqrt(pow(targetX - this->x, 2) + pow(targetY - this->y, 2));
+
+        double baseSpeed = 10;
+        double scalingFactor = 0.025;
+
+        double speed = std::min(baseSpeed, distance * scalingFactor);
+
+        int newX = this->x + static_cast<int>(speed * cos(angle));
+        int newY = this->y + static_cast<int>(speed * sin(angle));
+
+        this->x = newX;
+        this->y = newY;
+    }
 }

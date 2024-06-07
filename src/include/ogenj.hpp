@@ -11,10 +11,10 @@ class ogenj:public vse {
     SDL_Rect podlaga;
     void risanje();
     ogenj();
-    int vrniZdravje();
+    int vrniZdravje() const;
     void spremeniZdravje();
-    int getX();
-    int getY(); //for debugging purposes
+    int getX() const;
+    int getY() const; //for debugging purposes
 };
 
 #endif

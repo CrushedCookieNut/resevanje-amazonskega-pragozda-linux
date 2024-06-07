@@ -20,5 +20,18 @@ void verigaOgnjev::izrisiVerigoOgnjev() {
 }
 
 void verigaOgnjev::izbrisiOgenj(int index) {
-    veriga.erase(veriga.begin()+index);
+    veriga.at(index).spremeniZdravje();
+    //std::cout << "Ogenj izbrisan na mestu: " << index << std::endl;
+}
+
+bool verigaOgnjev::preveriKonec() {
+    int x=0;
+    for (int i=0;i<this->veriga.size();i++) {
+        if (veriga.at(i).vrniZdravje()==0)
+            x++;
+    }
+    if (x==veriga.size()) {
+        return 1;
+    }
+    return 0;
 }

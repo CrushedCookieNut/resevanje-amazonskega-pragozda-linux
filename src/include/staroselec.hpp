@@ -8,13 +8,13 @@
 class staroselec:public ljudje {
     SDL_Surface *staroselecSurface;
     SDL_Texture *staroselecTexture;
-    SDL_Rect podlaga;
     friend class seznamStaroselcev;
     public:
-    SDL_Rect getRect();
+    SDL_Rect podlaga;
     staroselec();
     void risanje();
-    void premikanje(igralec);
+    //void premikanje(igralec);
+    void premikanje(verigaOgnjev&);
 };
 
 #endif

@@ -11,6 +11,7 @@ class seznamSovraznikov {
     void izrisiSeznamSovraznikov();
     void ustvariSeznamSovraznikov();
     void izbrisiSovraznika(int);
+    bool preveriKonec();
 };
 
 #endif

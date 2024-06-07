@@ -3,7 +3,8 @@
 
 class vse {
     protected:
-    int x,y,zdravje;
+    mutable int x,y;
+    int zdravje;
     public:
     virtual void risanje()=0;
 };

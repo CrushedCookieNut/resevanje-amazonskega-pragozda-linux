@@ -15,6 +15,7 @@ class sovraznik:public ljudje {
     void premikanje();
     void unicevanjeDreves();
     sovraznik();
+
 };
 
 #endif
