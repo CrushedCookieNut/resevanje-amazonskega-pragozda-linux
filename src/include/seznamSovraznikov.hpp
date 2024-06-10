@@ -5,9 +5,10 @@
 #include <vector>
 
 class seznamSovraznikov {
+    int stSOvraznikov=5;
     public:
     std::vector<sovraznik> seznam;
-    seznamSovraznikov():seznam(5) {}
+    seznamSovraznikov():seznam(stSOvraznikov) {}
     void izrisiSeznamSovraznikov();
     void ustvariSeznamSovraznikov();
     void izbrisiSovraznika(int);

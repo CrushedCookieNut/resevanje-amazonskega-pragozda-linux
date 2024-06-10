@@ -1,10 +1,18 @@
 #include "include/seznamSovraznikov.hpp"
 
 void seznamSovraznikov::ustvariSeznamSovraznikov() {
-    for (int i=0;i<seznam.size();i++) {
-        sovraznik tmp;
-        seznam.at(i)=tmp;
-        seznam.at(i).risanje();
+    if (seznam.size()==0) {
+        for (int i=0;i<stSOvraznikov;i++) {
+            sovraznik tmp;
+            seznam.push_back(tmp);
+            seznam.at(i).risanje();
+        }
+    } else {
+        for (int i=0;i<seznam.size();i++) {
+            sovraznik tmp;
+            seznam.at(i)=tmp;
+            seznam.at(i).risanje();
+        }
     }
 }
 

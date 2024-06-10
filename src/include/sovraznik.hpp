@@ -13,7 +13,6 @@ class sovraznik:public ljudje {
     SDL_Rect podlaga;
     void risanje();
     void premikanje();
-    void unicevanjeDreves();
     sovraznik();
 
 };

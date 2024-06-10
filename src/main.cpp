@@ -3,6 +3,7 @@
 #include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "include/sdl-window-and-renderer.hpp"
 #include "include/ogenj.hpp"
 #include "include/verigaOgnjev.hpp"
@@ -82,6 +83,12 @@ void osvezevanje(zemljevidDreves &igralenZemljevid, verigaOgnjev &x, seznamSovra
 int main() {
     srand(time(NULL));
     SDL_Init(SDL_INIT_EVERYTHING);
+
+    if (TTF_Init() != 0) {
+        printf("TTF_Init Error: %s\n", TTF_GetError());
+        SDL_Quit();
+        return 1;
+    }
     initializeWindowAndRenderer();
     int flags=IMG_INIT_PNG;
     int initStatus=IMG_Init(flags);
@@ -93,7 +100,7 @@ int main() {
     Uint32 frameStart;
     int frameTime;
 
-    //ustvarjanje usega
+    //ustvarjanje vsega
     zemljevidDreves igralenZemljevid;
     igralenZemljevid.ustvariZemljevidDreves();
     verigaOgnjev x;
@@ -104,6 +111,19 @@ int main() {
     b.ustvariSeznamStaroselcev();
     igralec igralec;
     osvezevanje(igralenZemljevid,x,a,igralec,b);
+    
+
+    int stopnja=1;
+
+    TTF_Font *font = TTF_OpenFont("/home/bavconlaura/Documents/cutie-pie-cafe/font/VaguelyRetroRegular-3zAqM.ttf", 30);
+        if (font == NULL) {
+        printf("TTF_OpenFont Error: %s\n", TTF_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        TTF_Quit();
+        SDL_Quit();
+        return 1;
+    }
 
     //za spawnanje ognjev
     int spawnFrequency=120;
@@ -134,12 +154,45 @@ int main() {
             SDL_Delay(frameDelay-frameTime);
         }
 
-        if (x.preveriKonec()&&a.preveriKonec()) {
-            cout << "Zmagal si!";
+        if (x.preveriKonec()&&a.preveriKonec()&&stopnja==2) {
+            SDL_Color color = {255, 255, 255, 255};
+            SDL_Surface *surf = TTF_RenderText_Solid(font, "ZMAGAL SI!", color);
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+            SDL_FreeSurface(surf);
+            int texW = 0;
+            int texH = 0;
+            SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+            SDL_Rect dstrect = {400, 300, texW, texH};
+
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
             SDL_RenderPresent(renderer);
+
+            cout << "Zmagal si!";
             SDL_Delay(5000);
             break;
+        } else if (x.preveriKonec()&&a.preveriKonec()&&stopnja==1) {
+            SDL_Color color = {255, 255, 255, 255};
+            SDL_Surface *surf = TTF_RenderText_Solid(font, "NASLEDNJA STOPNJA", color);
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+            SDL_FreeSurface(surf);
+            int texW = 0;
+            int texH = 0;
+            SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+            SDL_Rect dstrect = {400, 300, texW, texH};
+
+            SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+            SDL_RenderPresent(renderer);
+            spawnFrequency=60;
+            SDL_Delay(2500);
+            igralenZemljevid.ustvariZemljevidDreves();
+            x.ustvariVerigoOgnjev();
+            a.ustvariSeznamSovraznikov();
+            b.ustvariSeznamStaroselcev();
+            igralec.zacetnaPozicija();
+            igralec.risanje();
+            stopnja++;
         }
 
         if (framesSinceLastSpawn>=spawnFrequency) {
@@ -148,9 +201,20 @@ int main() {
         }
 
         if (igralenZemljevid.preveriKonec()) {
-            cout << "Izgubil si!";
+            SDL_Color color = {255, 255, 255, 255};
+            SDL_Surface *surf = TTF_RenderText_Solid(font, "IZGUBIL SI :(", color);
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+            SDL_FreeSurface(surf);
+            int texW = 0;
+            int texH = 0;
+            SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+            SDL_Rect dstrect = {400, 300, texW, texH};
+
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
             SDL_RenderPresent(renderer);
+
+            cout << "Izgubil si!";
             SDL_Delay(5000);
             break;
         }
