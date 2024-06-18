@@ -14,6 +14,7 @@
 #include "include/seznamSovraznikov.hpp"
 #include "include/staroselec.hpp"
 #include "include/seznamStaroselcev.hpp"
+#include "include/leaderboard.hpp"
 using namespace std;
 
 void spawnajOgenj(verigaOgnjev& veriga) {
@@ -21,13 +22,14 @@ void spawnajOgenj(verigaOgnjev& veriga) {
     veriga.veriga.push_back(novOgenj);
 }
 
-void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c, seznamStaroselcev &d, zemljevidDreves &e) { //preverjanje trkov med ognjem in igralcem, ostalo še potrbno dodati
+void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c, seznamStaroselcev &d, zemljevidDreves &e, int &tocke) { //preverjanje trkov med ognjem in igralcem, ostalo še potrbno dodati
     bool trkZOgnjem, trkSSovraznikom, trkMedOgnjemInStaroselcem,trkMedSovraznikomInDrevesom;
     for (int i=0;i<b.veriga.size();i++) { //gre čez cel vektor ognjev
         trkZOgnjem = SDL_HasIntersection(&a.podlaga, &b.veriga.at(i).podlaga);
         if (trkZOgnjem==SDL_TRUE) {
             //cout << "Trk!"; //za debugging večinoma
             b.izbrisiOgenj(i);
+            tocke+=10;
         }
     }
     for (int i=0;i<c.seznam.size();i++) {
@@ -35,6 +37,7 @@ void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c, seznamStarose
         if (trkSSovraznikom==SDL_TRUE) {
             //cout << "Trk!";
             c.izbrisiSovraznika(i);
+            tocke+=10;
         }
     }
     for (int i=0;i<d.seznam.size();i++) {
@@ -53,6 +56,7 @@ void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c, seznamStarose
                 e.zemljevid.at(j).dotaknilSeJeSovraznik();
                 if (e.zemljevid.at(j).preveriCeMrtvo()) {
                     e.uniciDrevo(j);
+                    tocke-=10;
                 } 
             }
         }
@@ -60,7 +64,7 @@ void preveriTrk(igralec &a, verigaOgnjev &b, seznamSovraznikov &c, seznamStarose
 
 }
 
-void osvezevanje(zemljevidDreves &igralenZemljevid, verigaOgnjev &x, seznamSovraznikov &a, igralec &b, seznamStaroselcev &c) {
+void osvezevanje(zemljevidDreves &igralenZemljevid, verigaOgnjev &x, seznamSovraznikov &a, igralec &b, seznamStaroselcev &c, int &tocke) {
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer,0,0,0,255);
     //SDL_RenderClear(renderer); //funkcija da se ponovno izrisuje use vedno
@@ -76,7 +80,7 @@ void osvezevanje(zemljevidDreves &igralenZemljevid, verigaOgnjev &x, seznamSovra
     c.izrisiSeznamStaroselcev();
     b.preveriDotikanjeRoba();
     b.risanje();
-    preveriTrk(b,x,a,c, igralenZemljevid); //to je na koncu in tehnično deluje ampak ne  vem zakaj?
+    preveriTrk(b,x,a,c, igralenZemljevid, tocke); //to je na koncu in tehnično deluje ampak ne  vem zakaj?
     SDL_RenderPresent(renderer);
 }
 
@@ -110,10 +114,13 @@ int main() {
     seznamStaroselcev b;
     b.ustvariSeznamStaroselcev();
     igralec igralec;
-    osvezevanje(igralenZemljevid,x,a,igralec,b);
-    
+    int tocke=0;
+    osvezevanje(igralenZemljevid,x,a,igralec,b,tocke);
+    ldb imeLestvice;    
 
     int stopnja=1;
+    int lastSinceCheckTocke=0;
+    int odstejTocke=120;
 
     TTF_Font *font = TTF_OpenFont("/home/bavconlaura/Documents/cutie-pie-cafe/font/VaguelyRetroRegular-3zAqM.ttf", 30);
         if (font == NULL) {
@@ -135,6 +142,7 @@ int main() {
     while (true) {
         frameStart=SDL_GetTicks();
         ++framesSinceLastSpawn;
+        ++lastSinceCheckTocke;
 
         if (SDL_PollEvent(&windowEvent)) {
             if (SDL_QUIT==windowEvent.type) {
@@ -143,10 +151,10 @@ int main() {
         } else if (SDL_PollEvent(&premikanje)) {
             if (premikanje.type==SDL_KEYDOWN) {
                 igralec.premikanje();
-                osvezevanje(igralenZemljevid,x,a,igralec,b);
+                osvezevanje(igralenZemljevid,x,a,igralec,b, tocke);
             }
         } else {
-            osvezevanje(igralenZemljevid,x,a,igralec,b);
+            osvezevanje(igralenZemljevid,x,a,igralec,b, tocke);
         }
         
         frameTime=SDL_GetTicks()-frameStart;
@@ -168,9 +176,28 @@ int main() {
             SDL_RenderCopy(renderer, texture, NULL, &dstrect);
             SDL_RenderPresent(renderer);
 
-            cout << "Zmagal si!";
-            SDL_Delay(5000);
-            break;
+            cout << "Zmagal si!" << endl;
+            char ime[100];
+            fgets(ime,100,stdin);
+            imeLestvice.vpisiPodatke(ime, tocke);
+            imeLestvice.pridobiPodatke();
+            cout << "Zelis igrati ponovno?" << endl;
+            bool ans;
+            cin >> ans;
+            if (ans==0) {
+                SDL_Delay(5000);
+                break;
+            } else {
+                stopnja=1;
+                igralenZemljevid.ustvariZemljevidDreves();
+                x.ustvariVerigoOgnjev();
+                a.ustvariSeznamSovraznikov();
+                b.ustvariSeznamStaroselcev();
+                igralec.zacetnaPozicija();
+                igralec.risanje();
+                spawnFrequency=120;
+                continue;
+            }
         } else if (x.preveriKonec()&&a.preveriKonec()&&stopnja==1) {
             SDL_Color color = {255, 255, 255, 255};
             SDL_Surface *surf = TTF_RenderText_Solid(font, "NASLEDNJA STOPNJA", color);
@@ -200,6 +227,10 @@ int main() {
             framesSinceLastSpawn=0;
         }
 
+        if (lastSinceCheckTocke>=odstejTocke) {
+            tocke-=10;
+        }
+
         if (igralenZemljevid.preveriKonec()) {
             SDL_Color color = {255, 255, 255, 255};
             SDL_Surface *surf = TTF_RenderText_Solid(font, "IZGUBIL SI :(", color);
@@ -215,9 +246,32 @@ int main() {
             SDL_RenderPresent(renderer);
 
             cout << "Izgubil si!";
+            char ime[100];
+            fgets(ime,100,stdin);
+            imeLestvice.vpisiPodatke(ime, tocke);
+            imeLestvice.pridobiPodatke();
             SDL_Delay(5000);
-            break;
+            cout << "Zelis igrati ponovno?" << endl;
+            bool ans;
+            cin >> ans;
+            if (ans==0) {
+                SDL_Delay(5000);
+                break;
+            } else {
+                stopnja=1;
+                igralenZemljevid.ustvariZemljevidDreves();
+                x.ustvariVerigoOgnjev();
+                a.ustvariSeznamSovraznikov();
+                b.ustvariSeznamStaroselcev();
+                igralec.zacetnaPozicija();
+                igralec.risanje();
+                spawnFrequency=120;
+                continue;
+            }
         }
+
+        if (tocke<0)
+            tocke=0;
     }
 
     SDL_DestroyWindow(window);
